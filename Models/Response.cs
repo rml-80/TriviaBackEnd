@@ -11,6 +11,7 @@ namespace TriviaBackend.Models
         [JsonProperty("response_code")]
         public int ResponseCode { get; set; }
         [JsonProperty("results")]
-        public IList<Results> Result { get; set; }
+        public List<Results> Result { get; set; }
+
     }
 }

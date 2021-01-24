@@ -9,6 +9,6 @@ namespace TriviaBackend.Models
     public class Categories
     {
         [JsonProperty("trivia_categories")]
-        public IList<TriviaCategories> TriviaCategory { get; set; }
+        public List<TriviaCategories> TriviaCategory { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace TriviaBackend.Models
@@ -16,6 +17,10 @@ namespace TriviaBackend.Models
 		[JsonProperty("correct_answer")]
 		public string CorrectAnswer { get; set; }
 		[JsonProperty("incorrect_answers")]
-		public IList<string> IncorrectAnswers { get; set; }
-	}
+		public List<string> IncorrectAnswers { get; set; }
+		[JsonProperty("alternatives")]
+		public List<string> Alternatives { get; set; }
+		[JsonProperty("questionNo")]
+		public int QuestionNo { get; set; }
+    }
 }
