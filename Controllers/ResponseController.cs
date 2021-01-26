@@ -15,6 +15,7 @@ namespace TriviaBackend.Controllers
     [ApiController]
     public class ResponseController : ControllerBase
     {
+
         private readonly IMemoryCache _memoryCache;
 
         public ResponseController(IMemoryCache memoryCache)
@@ -27,26 +28,13 @@ namespace TriviaBackend.Controllers
         [HttpGet("{numberOfQuestions}")]
         public async Task<IActionResult> Get(int numberOfQuestions)
         {
-            var url = $"https://opentdb.com/api.php?amount={numberOfQuestions}";
-            using (var client = new HttpClient())
+            try
             {
-                var resp = await client.GetAsync(url);
-                var response = resp.Content.ReadAsStringAsync().Result;
-                var response1 = JsonConvert.DeserializeObject<Response>(response);
-                List<Results> questionList = response1.Result.ToList();
-                var i = 1;
-                foreach (var item in questionList)
-                {
-                    item.QuestionNo = i;
-                    item.Alternatives = new List<string>();
-                    item.Alternatives.Add(item.CorrectAnswer);
-                    foreach (var alt in item.IncorrectAnswers)
-                    {
-                        item.Alternatives.Add(alt);
-                    }
-                    i++;
-                }
-                return Ok(questionList);
+                return Ok(await GetAPIData.GetJson(numberOfQuestions));
+            }
+            catch (System.Exception)
+            {
+                throw;
             }
         }
 
@@ -55,15 +43,14 @@ namespace TriviaBackend.Controllers
         [HttpGet("{categoryId}/{numberOfQuestions}")]
         public async Task<IActionResult> Get(int numberOfQuestions, int categoryId)
         {
-            var url = $"https://opentdb.com/api.php?amount={numberOfQuestions}&category={categoryId}";
 
-            using (var client = new HttpClient())
+            try
             {
-                using (var resp = await client.GetAsync(url))
-                {
-                    var response = await resp.Content.ReadAsStringAsync();
-                    return Ok(response);
-                }
+                return Ok(await GetAPIData.GetJsonCategory(numberOfQuestions, categoryId));
+            }
+            catch (System.Exception)
+            {
+                throw;
             }
         }
         // get all categories
@@ -71,24 +58,21 @@ namespace TriviaBackend.Controllers
         [HttpGet("categories")]
         public async Task<IActionResult> Get()
         {
-            var url = $"https://opentdb.com/api_category.php";
             var cacheKey = "CategoryList";
-
-            if (!_memoryCache.TryGetValue(cacheKey, out List<TriviaCategories> orderd))
+            try
             {
-                using (var client = new HttpClient())
+                if (!_memoryCache.TryGetValue(cacheKey, out List<Categories> orderd))
                 {
-                    using (var resp = await client.GetAsync(url))
-                    {
-                        var response = resp.Content.ReadAsStringAsync().Result;
-                        var str = JsonConvert.DeserializeObject<Categories>(response);
-                        List<TriviaCategories> sorted = str.TriviaCategory.ToList();
-                        orderd = sorted.OrderBy(n => n.Name.Substring(0)).ToList();
-                    }
+                    orderd = await GetAPIData.GetJsonCategories();
+                    _memoryCache.Set(cacheKey, orderd);
                 }
-                _memoryCache.Set(cacheKey, orderd);
+                return Ok(orderd);
             }
-            return Ok(orderd);
+            catch (System.Exception)
+            {
+
+                throw;
+            }
         }
 
     }

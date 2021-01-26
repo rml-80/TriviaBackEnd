@@ -1,17 +1,15 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using TriviaBackend.Interfaces;
 
 namespace TriviaBackend.Models
 {
-    public class Response
+    public class APIResponse : IAPIResponse
     {
         [JsonProperty("response_code")]
         public int ResponseCode { get; set; }
         [JsonProperty("results")]
-        public List<Results> Result { get; set; }
+        public List<Questions> Result { get; set; }
 
     }
 }
