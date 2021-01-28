@@ -17,6 +17,27 @@ namespace TriviaBackend.Controllers
         {
             _memoryCache = memoryCache;
         }
+        // get all categories
+        // GET api/<ResponseController>/5
+        [HttpGet("categories")]
+        public async Task<IActionResult> Get()
+        {
+            var cacheKey = "CategoryList";
+            var orderdJson = await GetAPIData.GetJsonCategories();
+            if (orderdJson == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                if (!_memoryCache.TryGetValue(cacheKey, out List<Categories> orderd))
+                {
+                    orderd = orderdJson;
+                    _memoryCache.Set(cacheKey, orderd);
+                }
+                return Ok(orderd);
+            }
+        }
         // get X number of questions from all categories
         // GET: api/<ResponseController>
         [HttpGet("{numberOfQuestions}")]
@@ -40,27 +61,6 @@ namespace TriviaBackend.Controllers
                 return BadRequest();
             }
             return Ok(temp);
-        }
-        // get all categories
-        // GET api/<ResponseController>/5
-        [HttpGet("categories")]
-        public async Task<IActionResult> Get()
-        {
-            var cacheKey = "CategoryList";
-            var orderdJson = await GetAPIData.GetJsonCategories();
-            if (orderdJson == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                if (!_memoryCache.TryGetValue(cacheKey, out List<Categories> orderd))
-                {
-                    orderd = orderdJson;
-                    _memoryCache.Set(cacheKey, orderd);
-                }
-                return Ok(orderd);
-            }
         }
     }
 }

@@ -17,6 +17,30 @@ namespace TriviaBackend
         {
             _memoryCache = memoryCache;
         }
+        // Get all categories as a alphabetically sorted list
+        public static async Task<List<Categories>> GetJsonCategories()
+        {
+            var url = $"https://opentdb.com/api_category.php";
+            using (var client = new HttpClient())
+            {
+                using (var resp = await client.GetAsync(url))
+                {
+                    if (!resp.IsSuccessStatusCode)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        var response = resp.Content.ReadAsStringAsync().Result;
+                        var str = JsonConvert.DeserializeObject<CategoriesList>(response);
+                        List<Categories> sorted = str.TriviaCategory;
+                        sorted = sorted.OrderBy(n => n.Name).ToList();
+                        return sorted;
+                    }
+                } 
+            }
+        }
+        // Get requested amount of questions from all categories
         public static async Task<List<Questions>> GetJson(int numberOfQuestions)
         {
             var url = $"https://opentdb.com/api.php?amount={numberOfQuestions}";
@@ -46,6 +70,7 @@ namespace TriviaBackend
                 } 
             }
         }
+        // Get requested amount of questions from selected category
         public static async Task<List<Questions>> GetJsonCategory(int numberOfQuestions, int categoryId)
         {
             var url = $"https://opentdb.com/api.php?amount={numberOfQuestions}&category={categoryId}";
@@ -71,28 +96,6 @@ namespace TriviaBackend
                             questionList = null;
                         }
                         return questionList;
-                    }
-                } 
-            }
-        }
-        public static async Task<List<Categories>> GetJsonCategories()
-        {
-            var url = $"https://opentdb.com/api_category.php";
-            using (var client = new HttpClient())
-            {
-                using (var resp = await client.GetAsync(url))
-                {
-                    if (!resp.IsSuccessStatusCode)
-                    {
-                        return null;
-                    }
-                    else
-                    {
-                        var response = resp.Content.ReadAsStringAsync().Result;
-                        var str = JsonConvert.DeserializeObject<CategoriesList>(response);
-                        List<Categories> sorted = str.TriviaCategory;
-                        sorted = sorted.OrderBy(n => n.Name).ToList();
-                        return sorted;
                     }
                 } 
             }
