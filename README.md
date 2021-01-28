@@ -1,4 +1,4 @@
-# TriviaBackend
+# TriviaBackEnd
 BackEnd for a Trivia Application
 
 
