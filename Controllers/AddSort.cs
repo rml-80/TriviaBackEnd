@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using TriviaBackend.Models;
 
 namespace TriviaBackend.Controllers
 {
     public class AddSort
     {
+        // Return a sorted list with a question id in form of a int, and a new List for alternatives
+        // API returns Correct answer by it self, and the rest of alternatives as a list, so I want to 
+        // combine these to a own list called alternatives for better displaying in frontend
         public static List<Questions> AddAltAndSort(List<Questions> questionList)
         {
             var i = 1;
@@ -25,7 +25,7 @@ namespace TriviaBackend.Controllers
                 item.Alternatives.Sort();
                 i++;
             }
-                return questionList;
+            return questionList;
         }
     }
 }
