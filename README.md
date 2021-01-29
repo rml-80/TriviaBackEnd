@@ -1,5 +1,6 @@
 # TriviaBackEnd
-BackEnd for a Trivia Application
+BackEnd for a Trivia Application in C#
+Built in Visual Studio
 
 
 ## Nuget packeges to used / to be installed
