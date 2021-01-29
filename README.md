@@ -4,9 +4,9 @@ Built in Visual Studio
 
 ## How to Run
 	Download and extraxt.
-	Run .sln file
+	Run TriviaBackend.sln file
 	It will open in Visual Studio
-	Nuget packeges will be install
+	Nuget packeges will be installed
 	If not install below noted packages
 	Press F5 to run
 
