@@ -8,6 +8,7 @@ Built in Visual Studio
 	It will open in Visual Studio
 	Nuget packeges will be install
 	If not install below noted packages
+	Press F5 to run
 
 ## Nuget packeges to used / to be installed
 1. Microsoft.Extensions.Caching.Memory [Link](https://www.nuget.org/packages/Microsoft.Extensions.Caching.Memory/5.0.0?_src=template)
