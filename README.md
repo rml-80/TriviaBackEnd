@@ -2,6 +2,12 @@
 BackEnd for [TrivaFrontEnd](https://github.com/rml-80/Triviafrontend) Application in C#
 Built in Visual Studio
 
+## How to Run
+	Download and extraxt.
+	Run .sln file
+	It will open in Visual Studio
+	Nuget packeges will be install
+	If not install below noted packages
 
 ## Nuget packeges to used / to be installed
 1. Microsoft.Extensions.Caching.Memory [Link](https://www.nuget.org/packages/Microsoft.Extensions.Caching.Memory/5.0.0?_src=template)
