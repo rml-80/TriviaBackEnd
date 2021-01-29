@@ -1,5 +1,6 @@
-# TriviaBackend
-BackEnd for a Trivia Application
+# TriviaBackEnd
+BackEnd for [TrivaFrontEnd](https://github.com/rml-80/Triviafrontend) Application in C#
+Built in Visual Studio
 
 
 ## Nuget packeges to used / to be installed
@@ -29,7 +30,7 @@ There are three ways it gets the data.
 
 ## Error handling
 If an error occurs it will send back a BadRequest.
-because the way Open Triva Database send back data I check response_code in response
+Because the way Open Triva Database send back data I check response_code in response
 and if not success, send back a BadRequest.
 
 	Example: 
